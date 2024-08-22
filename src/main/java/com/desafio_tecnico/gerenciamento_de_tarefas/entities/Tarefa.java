@@ -71,14 +71,4 @@ public class Tarefa {
         this.prioridade = prioridade;
     }
 
-    /*
-    git add src/main/java/com/example/projectname/model/Tarefa.java
-git commit -m "Add Tarefa class with constructors, getters, and setters
-
-- Created `Tarefa` class in `model` package.
-- Added private fields `id`, `titulo`, `descricao`, and `dataCriacao`.
-- Implemented default constructor and constructor with all fields.
-- Added getters and setters for each field."
-
-     */
 }
