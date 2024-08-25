@@ -58,4 +58,19 @@ public class TarefaService {
             );
         }
     }
+
+    @Transactional
+    public TarefaDTO inserir(TarefaDTO dto){
+        Tarefa tarefa = new Tarefa();
+        copiarDtoParaEntidade(dto, tarefa);
+        tarefa = tarefaRepository.save(tarefa);
+        return new TarefaDTO(tarefa);
+    }
+
+    private void copiarDtoParaEntidade(TarefaDTO dto, Tarefa tarefa){
+        tarefa.setNome(dto.getNome());
+        tarefa.setDescricao(dto.getDescricao());
+        tarefa.setRealizado(dto.isRealizado());
+        tarefa.setPrioridade(dto.getPrioridade());
+    }
 }
