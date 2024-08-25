@@ -5,6 +5,7 @@ import com.desafio_tecnico.gerenciamento_de_tarefas.entities.Tarefa;
 import com.desafio_tecnico.gerenciamento_de_tarefas.repositories.TarefaRepository;
 import com.desafio_tecnico.gerenciamento_de_tarefas.services.exceptions.BancoDeDadosException;
 import com.desafio_tecnico.gerenciamento_de_tarefas.services.exceptions.EntidadeNaoEncontradaException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,21 @@ public class TarefaService {
         copiarDtoParaEntidade(dto, tarefa);
         tarefa = tarefaRepository.save(tarefa);
         return new TarefaDTO(tarefa);
+    }
+
+    @Transactional
+    public TarefaDTO atualizar(Long id, TarefaDTO dto){
+        try {
+            Tarefa tarefa = tarefaRepository.getReferenceById(id);
+            copiarDtoParaEntidade(dto, tarefa);
+            tarefa = tarefaRepository.save(tarefa);
+            return new TarefaDTO(tarefa);
+        }
+        catch (EntityNotFoundException e){
+            throw new EntidadeNaoEncontradaException(
+                    "Registro " + id + " não encontrado em sua base de dados!"
+            );
+        }
     }
 
     private void copiarDtoParaEntidade(TarefaDTO dto, Tarefa tarefa){
