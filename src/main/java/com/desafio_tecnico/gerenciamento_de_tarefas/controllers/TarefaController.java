@@ -44,4 +44,11 @@ public class TarefaController {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TarefaDTO> atualizarTarefa(@PathVariable Long id,
+                                                     @RequestBody TarefaDTO dto){
+        dto = tarefaService.atualizar(id, dto);
+        return ResponseEntity.ok().body(dto);
+    }
 }
