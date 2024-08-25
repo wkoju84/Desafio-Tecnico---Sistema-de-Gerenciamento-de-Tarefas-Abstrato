@@ -4,6 +4,7 @@ import com.desafio_tecnico.gerenciamento_de_tarefas.dtos.TarefaDTO;
 import com.desafio_tecnico.gerenciamento_de_tarefas.services.TarefaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +24,11 @@ public class TarefaController {
     public ResponseEntity<List<TarefaDTO>> buscarTodasAsTarefas(){
         List<TarefaDTO> tarefaDTOS = tarefaService.buscarTodos();
         return ResponseEntity.ok().body(tarefaDTOS);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<TarefaDTO> buscarTarefaPorId(@PathVariable Long id){
+        TarefaDTO dto = tarefaService.buscarPorId(id);
+        return ResponseEntity.ok().body(dto);
     }
 }
