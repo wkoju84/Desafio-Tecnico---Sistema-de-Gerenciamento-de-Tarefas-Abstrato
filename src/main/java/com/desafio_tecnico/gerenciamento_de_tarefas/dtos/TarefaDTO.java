@@ -1,21 +1,15 @@
-package com.desafio_tecnico.gerenciamento_de_tarefas.entities;
+package com.desafio_tecnico.gerenciamento_de_tarefas.dtos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.desafio_tecnico.gerenciamento_de_tarefas.entities.Tarefa;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-@Entity
-public class Tarefa implements Serializable {
+public class TarefaDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -26,15 +20,23 @@ public class Tarefa implements Serializable {
 
     private int prioridade;
 
-    public Tarefa() {
+    public TarefaDTO() {
     }
 
-    public Tarefa(Long id, String nome, String descricao, boolean realizado, int prioridade) {
+    public TarefaDTO(Long id, String nome, String descricao, boolean realizado, int prioridade) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.realizado = realizado;
         this.prioridade = prioridade;
+    }
+
+    public TarefaDTO(Tarefa tarefa) {
+        this.id = tarefa.getId();
+        this.nome = tarefa.getNome();
+        this.descricao = tarefa.getDescricao();
+        this.realizado = tarefa.isRealizado();
+        this.prioridade = tarefa.getPrioridade();
     }
 
     public Long getId() {
@@ -76,5 +78,4 @@ public class Tarefa implements Serializable {
     public void setPrioridade(int prioridade) {
         this.prioridade = prioridade;
     }
-
 }
