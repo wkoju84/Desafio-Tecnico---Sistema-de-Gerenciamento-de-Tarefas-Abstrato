@@ -3,7 +3,10 @@ package com.desafio_tecnico.gerenciamento_de_tarefas.services;
 import com.desafio_tecnico.gerenciamento_de_tarefas.dtos.TarefaDTO;
 import com.desafio_tecnico.gerenciamento_de_tarefas.entities.Tarefa;
 import com.desafio_tecnico.gerenciamento_de_tarefas.repositories.TarefaRepository;
+import com.desafio_tecnico.gerenciamento_de_tarefas.services.exceptions.BancoDeDadosException;
 import com.desafio_tecnico.gerenciamento_de_tarefas.services.exceptions.EntidadeNaoEncontradaException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +41,21 @@ public class TarefaService {
                 "Registro " + id + " não encontrado em sua base de dados!"
         ));
         return new TarefaDTO(tarefa);
+    }
+
+    public void excluir(Long id){
+        try {
+            tarefaRepository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e){
+            throw new EntidadeNaoEncontradaException(
+                    "Exclusão impossível: Registro " + id + " não encontrado em sua base de dados!"
+            );
+        }
+        catch (DataIntegrityViolationException e){
+            throw new BancoDeDadosException(
+                    "Violação de integridade: Registro " + id + " está inserido em outro registro!"
+            );
+        }
     }
 }
