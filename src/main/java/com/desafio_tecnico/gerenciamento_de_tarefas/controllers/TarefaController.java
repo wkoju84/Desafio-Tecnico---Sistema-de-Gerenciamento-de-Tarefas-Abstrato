@@ -3,10 +3,7 @@ package com.desafio_tecnico.gerenciamento_de_tarefas.controllers;
 import com.desafio_tecnico.gerenciamento_de_tarefas.dtos.TarefaDTO;
 import com.desafio_tecnico.gerenciamento_de_tarefas.services.TarefaService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,11 @@ public class TarefaController {
     public ResponseEntity<TarefaDTO> buscarTarefaPorId(@PathVariable Long id){
         TarefaDTO dto = tarefaService.buscarPorId(id);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> excluirTarefa(@PathVariable Long id){
+        tarefaService.excluir(id);
+        return ResponseEntity.noContent().build();
     }
 }
